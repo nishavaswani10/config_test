@@ -22,16 +22,26 @@ public class MainApplication {
 		Properties prop = new Properties();
 		Config config=new Config();
 		String overrides;
+
 		InputStream inputFile = MainApplication.class.getClassLoader().getResourceAsStream("application.properties");
 		prop.load(inputFile);
 		Scanner scanner=new Scanner(System.in);
-		System.out.println("Please enter the property you want to read ");
-		String input=scanner.next();
 		overrides=prop.getProperty("value.overrides");
-		System.out.println(overrides);
 		Config.load(prop.getProperty("file.path"),overrides.split(","));
-		String output=config.get(input);
-		LOG.info("Output: "+output);
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Please enter the property you want to read ");
+
+		while(sc.hasNext()) {
+			String input = sc.next();
+
+			if(input.equals("exit")) {
+				break;
+			}
+			String output=config.get(input);
+			System.out.println(output);
+			System.out.println("Do you want to read more property,Please enter the property else type exit");
+
+		}
 	}
 
 
