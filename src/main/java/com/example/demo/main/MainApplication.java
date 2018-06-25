@@ -17,33 +17,49 @@ public class MainApplication {
 	static Logger LOG = Logger.getLogger("DemoApplication.Class");
 
 	public static String fileName;
+	
+	private static  Scanner scanner;
+	
+	public MainApplication() {
+		this(new Scanner(System.in));
+	}
+
+    public MainApplication(Scanner scanner) {
+    	 this.scanner  = scanner;
+	}
+    public static String getInput() {
+
+        return scanner.nextLine();
+    }
+
+	
 
 	public static void main(String[] args) throws IOException {
 		Properties prop = new Properties();
 		Config config=new Config();
-		String overrides;
-
 		InputStream inputFile = MainApplication.class.getClassLoader().getResourceAsStream("application.properties");
 		prop.load(inputFile);
 		Scanner scanner=new Scanner(System.in);
-		overrides=prop.getProperty("value.overrides");
+		String output = null;
+		String overrides=prop.getProperty("value.overrides"); 
 		Config.load(prop.getProperty("file.path"),overrides.split(","));
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter the property you want to read ");
+		output = displayProp(config, scanner);
+	}
 
+	static String displayProp(Config config, Scanner sc) {
+		String result=null;
 		while(sc.hasNext()) {
-			String input = sc.next();
-
+			String input =getInput(); 
 			if(input.equals("exit")) {
 				break;
 			}
-			String output=config.get(input);
-			System.out.println(output);
+			 result= config.get(input);
+
+			System.out.println("Output:"+result);
 			System.out.println("Do you want to read more property,Please enter the property else type exit");
 
 		}
+		return result;
 	}
-
-
-
 }
