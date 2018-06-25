@@ -17,22 +17,6 @@ public class MainApplication {
 	static Logger LOG = Logger.getLogger("DemoApplication.Class");
 
 	public static String fileName;
-	
-	private static  Scanner scanner;
-	
-	public MainApplication() {
-		this(new Scanner(System.in));
-	}
-
-    public MainApplication(Scanner scanner) {
-    	 this.scanner  = scanner;
-	}
-    public static String getInput() {
-
-        return scanner.nextLine();
-    }
-
-	
 
 	public static void main(String[] args) throws IOException {
 		Properties prop = new Properties();
@@ -50,7 +34,7 @@ public class MainApplication {
 	static String displayProp(Config config, Scanner sc) {
 		String result=null;
 		while(sc.hasNext()) {
-			String input =getInput(); 
+			String input =sc.nextLine(); 
 			if(input.equals("exit")) {
 				break;
 			}
